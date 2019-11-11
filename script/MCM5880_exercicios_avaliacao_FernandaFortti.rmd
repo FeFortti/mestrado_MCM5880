@@ -1,0 +1,1442 @@
+---
+title: "MCM5880 - Bioestatística I - Exercícios de Avaliação"
+author: "Fernanda Fortti"
+date: "19 de outubro de 2019"
+output: pdf_document
+---
+
+```{r, warning = FALSE, message = FALSE}
+library(formatR)
+library(kableExtra)
+library(knitr)
+library(pander)
+library(tidyverse)
+library(VennDiagram)
+
+knitr::opts_chunk$set(base::options(scipen = 999,
+                                    digits = 3))
+knitr::opts_chunk$set(
+  tidy.opts = base::list(blank = FALSE,
+                         width.cutoff = 60),
+  tidy = TRUE,
+  comment = "Resposta:"
+)
+```
+
+#### **Informações gerais:**
+
+* A data máxima para entrega dos exercícios é 19/10/2019.
+* A entrega dos 20 exercícios deveria ser feita exclusivamente pelo e-mail
+mcm5880@gmail.com.
+* Os exercícios podem ser respondidos à mão e escaneados, ou digitados, em
+arquivo único.
+* Os exercícios podem ser feitos individualmente ou em dupla. No email de 
+entrega, incluir o nome completo do(a)(s) aluno(a)(s).
+* Sugere-se fortemente que os exercícios de treinamento e avaliação sejam
+feitos no decorrer do curso e não ao seu término.
+
+##### **Exercícios**
+
+```{r}
+respostas <-
+  base::data.frame(base::matrix(
+    base::vector(mode = "numeric",
+                 length = 51),
+    nrow = 51,
+    ncol = 1
+  ))
+base::rownames(respostas) <- base::c(
+  "1a",
+  "1b",
+  "1c",
+  "1d",
+  "1e",
+  "1f",
+  "1g",
+  "2a",
+  "2b",
+  "2c",
+  "2d",
+  "2e",
+  "2f",
+  "3" ,
+  "4a",
+  "4b",
+  "4c",
+  "4d",
+  "4e",
+  "4f",
+  "5",
+  "6",
+  "7",
+  "8a",
+  "8b",
+  "8c",
+  "8d",
+  "8e",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15a",
+  "15b",
+  "15c",
+  "15d",
+  "15e",
+  "16",
+  "17",
+  "18a",
+  "18b",
+  "18c",
+  "18d",
+  "19a",
+  "19b",
+  "19c",
+  "20a",
+  "20b",
+  "20c"
+)
+base::colnames(respostas) <- "resposta"
+```
+
+**1. Você tem as seguintes informações com relação a uma cidade:**  
+**População: 100.000.**  
+**Hipertensos: 25%.**  
+**Diabéticos: 15%.**  
+**Deprimidos: 12%.**  
+**Hipertensos e diabéticos: 4%.**  
+**Hipertensos e deprimidos: 5%.**  
+**Diabéticos e deprimidos: 3%.**  
+**Hipertensos, diabéticos e deprimidos: 1%.**  
+
+```{r }
+n_total <- 100000
+exercicio_1a <- base::as.data.frame(
+  x = base::matrix (ncol = 1,
+                    nrow = 7),
+  row.names = base::c(
+    "hipertensos",
+    "diabéticos",
+    "deprimidos",
+    "hipertensos e diabéticos",
+    "hipertensos e deprimidos",
+    "diabéticos e deprimidos",
+    "diabéticos e hipertensos e deprimidos"
+  )
+)
+
+exercicio_1a[1, 1] <- n_total * 0.25
+exercicio_1a[2, 1] <- n_total * 0.15
+exercicio_1a[3, 1] <- n_total * 0.12
+exercicio_1a[4, 1] <- n_total * 0.04
+exercicio_1a[5, 1] <- n_total * 0.05
+exercicio_1a[6, 1] <- n_total * 0.03
+exercicio_1a[7, 1] <- n_total * 0.01
+
+knitr::kable(
+  x = exercicio_1a,
+  format = "latex",
+  caption = "Condições crônicas.",
+  col.names = base::c("n"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+```{r, echo = TRUE, results = "hide", fig.keep = "all"}
+VennDiagram::draw.triple.venn(
+  area1 = exercicio_1a[1, 1],
+  area2 = exercicio_1a[2, 1],
+  area3 =  exercicio_1a[3, 1],
+  n12 = exercicio_1a[4, 1],
+  n13 = exercicio_1a[5, 1],
+  n23 = exercicio_1a[6, 1],
+  n123 = exercicio_1a[7, 1],
+  category = base::c("Hipertensos",
+                     "Diabéticos",
+                     "Deprimidos"),
+  lty = base::c("blank",
+                "blank",
+                "blank"),
+  fill = base::c("light blue",
+                 "pink",
+                 "gray"),
+  alpha = base::c(0.5,
+                  0.5,
+                  0.5),
+  cat.pos = base::c(0,
+                    0,
+                    180),
+  scaled = TRUE
+)
+```
+
+**(a) Determine o número de pessoas com apenas uma das doenças.**
+
+```{r}
+respostas[1, 1] <- 17000 + 9000 + 5000
+base::cat(base::noquote(respostas[1, 1]),
+          sep = "")
+```
+
+**(b) Quantas pessoas têm ao menos duas dessas doenças?**
+
+```{r}
+respostas[2, 1] <- 4000 + 3000 + 2000 + 1000
+base::cat(base::noquote(respostas[2, 1]),
+          sep = "")
+```
+
+**(c) Quantos diabéticos são hipertensos ou deprimidos?**
+
+```{r}
+respostas[3, 1] <- 3000 + 1000 + 2000
+base::cat(base::noquote(respostas[3, 1]),
+          sep = "")
+```
+
+**(d) Quantas pessoas não têm nenhuma das doenças?**
+
+```{r}
+respostas[4, 1] <-
+  100000 - (17000 + 4000 + 1000 + 3000 + 9000 + 2000 + 5000)
+base::cat(base::noquote(respostas[4, 1]),
+          sep = "")
+```
+
+**(e) Qual a probabilidade, nessa cidade, de um indivíduo hipertenso ser**
+**diabético?**
+
+```{r}
+respostas[5, 1] <-
+  base::round(((3000 + 1000) /
+                 (17000 + 4000 + 3000 + 1000)),
+              digits = 3)
+base::cat(base::noquote(respostas[5, 1]),
+          sep = "")
+```
+
+**(f) Qual a probabilidade, nessa cidade, de um indivíduo diabético e**
+**deprimido ser hipertenso?**
+
+```{r}
+respostas[6, 1] <- base::round(((1000) /
+                                  (1000 + 2000)),
+                               digits = 3)
+base::cat(base::noquote(respostas[6, 1]),
+          sep = "")
+```
+
+**(g) Qual a probabilidade, nessa cidade, de um indivíduo não hipertenso ser**
+**diabético e deprimido?**
+
+```{r}
+respostas[7, 1] <- base::round(((2000) /
+                                  (100000 - 25000)),
+                               digits = 3)
+base::cat(base::noquote(respostas[7, 1]),
+          sep = "")
+```
+
+**2. Em determinada população, 30% das pessoas são apenas hipertensas, 10%**
+**são apenas diabéticas e 5% são hipertensas e diabéticas. Calcule a**
+**probabilidade, nessa população,**
+
+```{r, echo = TRUE, results = "hide", fig.keep = "all"}
+VennDiagram::draw.pairwise.venn(
+  area1 = 35,
+  area2 = 15,
+  cross.area = 5,
+  category = base::c("Hipertensos",
+                     "Diabéticos"),
+  lty = base::c("blank",
+                "blank"),
+  fill = base::c("light blue",
+                 "pink"),
+  alpha = base::c(0.5,
+                  0.5),
+  cat.pos = base::c(0,
+                    0),
+  scaled = TRUE
+)
+```
+
+**(a) De uma pessoa ser diabética**
+
+```{r}
+respostas[8, 1] <- base::round(((5 + 10) /
+                                  100),
+                               digits = 3)
+base::cat(base::noquote(respostas[8, 1]),
+          sep = "")
+```
+
+**(b) De uma pessoa ser hipertensa**
+
+```{r}
+respostas[9, 1] <- base::round(((30 + 5) /
+                                  100),
+                               digits = 3)
+base::cat(base::noquote(respostas[9, 1]),
+          sep = "")
+```
+
+**(c) De uma pessoa hipertensa ser diabética**
+
+```{r}
+respostas[10, 1] <- base::round(((5) /
+                                   (30 + 5)),
+                                digits = 3)
+base::cat(base::noquote(respostas[10, 1]),
+          sep = "")
+```
+
+**(d) De uma pessoa diabética ser hipertensa**
+
+```{r}
+respostas[11, 1] <- base::round(((5) /
+                                   (5 + 10)),
+                                digits = 3)
+base::cat(base::noquote(respostas[11, 1]),
+          sep = "")
+```
+
+**(e) De uma pessoa não hipertensa ser diabética**
+
+```{r}
+respostas[12, 1] <- base::round(((10) /
+                                   ((100) - (30 + 5))),
+                                digits = 3)
+base::cat(base::noquote(respostas[12, 1]),
+          sep = "")
+```
+
+**(f) De uma pessoa não hipertensa não ser diabética**
+
+```{r}
+respostas[13, 1] <-
+  base::round(((100 - (30 + 5) - 10) /
+                 ((100) - (30 + 5))),
+              digits = 3)
+base::cat(base::noquote(respostas[13, 1]),
+          sep = "")
+```
+
+**3.Um paciente procura o consultório médico trazendo um exame positivo para**
+**determinada doença, que acomete 5% da população geral. O teste dá positivo**
+**em 90% dos doentes e em 20% dos não doentes. Qual a probabilidade desse**
+**paciente ter a doença?**
+
+```{r}
+prevalencia <- 0.05
+odds_pre <- 0.05 /
+  (1 - 0.05)
+sensibilidade <- 0.90
+especificidade <- 1 - 0.2
+
+razao_verossimilhanca_teste_positivo <- (sensibilidade) /
+  (1 - especificidade)
+odds_pos_teste_positivo <- odds_pre *
+  razao_verossimilhanca_teste_positivo
+
+prob_pos_teste_positivo <- (odds_pos_teste_positivo) /
+  (1 + (odds_pos_teste_positivo))
+respostas[14, 1] <- base::round(prob_pos_teste_positivo,
+                                digits = 3)
+base::cat(base::noquote(respostas[14, 1]),
+          sep = "")
+```
+
+**4.Um estudo de teste diagnóstico observou o seguinte resultado quando**
+**comparado ao padrão-ouro:**
+
+```{r , echo = FALSE}
+exercicio_4 <- base::as.data.frame(
+  x = base::matrix(ncol = 3,
+                   nrow = 3),
+  row.names = base::c("teste positivo",
+                      "teste negativo",
+                      "total")
+)
+
+exercicio_4[1, 1] <- 240
+exercicio_4[1, 2] <- 70
+exercicio_4[1, 3] <- 310
+exercicio_4[2, 1] <- 60
+exercicio_4[2, 2] <- 630
+exercicio_4[2, 3] <- 690
+exercicio_4[3, 1] <- 300
+exercicio_4[3, 2] <- 700
+exercicio_4[3, 3] <- 1000
+
+knitr::kable(
+  x = exercicio_4,
+  format = "latex",
+  caption = "Teste diagnóstico.",
+  col.names = base::c("doentes",
+                      "não doentes",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**Baseado nesses resultados, calcule:**
+
+**(a) Sensibilidade**
+
+```{r}
+respostas[15, 1] <- base::round((240 / 300),
+                                digits = 3)
+base::cat(base::noquote(respostas[15, 1]),
+          sep = "")
+```
+
+**(b) Especificidade**
+
+```{r}
+respostas[16, 1] <- base::round((630 / 700),
+                                digits = 3)
+base::cat(base::noquote(respostas[16, 1]),
+          sep = "")
+```
+
+**(c) Valor preditivo positivo**
+
+```{r}
+respostas[17, 1] <- base::round((240 / 310),
+                                digits = 3)
+base::cat(base::noquote(respostas[17, 1]),
+          sep = "")
+```
+
+**(d) Valor preditivo negativo**
+
+```{r}
+respostas[18, 1] <- base::round((630 / 690),
+                                digits = 3)
+base::cat(base::noquote(respostas[18, 1]),
+          sep = "")
+```
+
+**(e) Razão de verossimilhança para o resultado positivo**
+
+```{r}
+respostas[19, 1] <- base::round((respostas[15, 1] /
+                                   (1 - respostas[16, 1])),
+                                digits = 3)
+base::cat(base::noquote(respostas[19, 1]),
+          sep = "")
+```
+
+**(f) Razão de verossimilhança para o resultado negativo**
+
+```{r}
+respostas[20, 1] <- base::round(((1 - respostas[15, 1]) /
+                                   respostas[16, 1]),
+                                digits = 3)
+base::cat(base::noquote(respostas[20, 1]),
+          sep = "")
+```
+
+**5.Dadas as probabilidades pré-teste e razões de verossimilhança indicados** 
+**no quadro abaixo, calcule as probabilidades pós-teste:**
+
+```{r , echo = FALSE}
+exercicio_5 <- base::as.data.frame(x = base::matrix(ncol = 2,
+                                                    nrow = 3))
+
+exercicio_5[1, 1] <- 0.2
+exercicio_5[1, 2] <- 0.4
+exercicio_5[2, 1] <- 0.4
+exercicio_5[2, 2] <- 6
+exercicio_5[3, 1] <- 0.05
+exercicio_5[3, 2] <- 9.5
+
+knitr::kable(
+  x = exercicio_5,
+  format = "latex",
+  caption = "Teste diagnóstico.",
+  col.names = base::c("probabilidade pré-teste",
+                      "razão de verossimilhança"),
+  row.names = FALSE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+```{r}
+exercicio_5 <- base::data.frame(
+  probabilidade_pre_teste = base::c(0.2, 0.4, 0.05),
+  razao_de_verossimilhanca = base::c(0.4, 6, 9.5)
+)
+
+exercicio_5$odds_pre_teste <-
+  base::c(base::c((exercicio_5[1, 1]) /
+                    (1 - exercicio_5[1, 1])),
+          base::c((exercicio_5[2, 1]) /
+                    (1 - exercicio_5[2, 1])),
+          base::c((exercicio_5[3, 1]) /
+                    (1 - exercicio_5[3, 1])))
+exercicio_5$odds_pos_teste <-
+  base::c(base::c((exercicio_5[1, 2]) *
+                    (exercicio_5[1, 3])),
+          base::c((exercicio_5[2, 2]) *
+                    (exercicio_5[2, 3])),
+          base::c((exercicio_5[3, 2]) *
+                    (exercicio_5[3, 3])))
+exercicio_5$probabilidade_pos_teste <-
+  base::round(base::c(base::c((exercicio_5[1, 4]) /
+                                (1 + exercicio_5[1, 4])),
+                      base::c((exercicio_5[2, 4]) /
+                                (1 + exercicio_5[2, 4])),
+                      base::c((exercicio_5[3, 4]) /
+                                (1 + exercicio_5[3, 4]))),
+              digits = 3)
+
+respostas[21, 1] <-
+  base::as.character(
+    "Probabilidade pós teste 1 = 0.091;
+  probabilidade pós teste 2 = 0.800;
+  probabilidade pós teste 3 = 0.333."
+  )
+
+knitr::kable(
+  x = exercicio_5,
+  format = "latex",
+  caption = "Resposta:",
+  col.names = base::c(
+    "probabilidade pré-teste",
+    "razão de verossimilhança",
+    "odds pré-teste",
+    "odds pós-teste",
+    "probabilidade pós-teste"
+  ),
+  row.names = FALSE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(
+    kable_input = .,
+    position = "center",
+    latex_options = base::c("hold_position",
+                            "scale_down")
+  )
+```
+
+**6.Um paciente procura o consultório médico com resultado de exame** 
+**positivo, querendo saber a probabilidade dele ter a doença. A**
+**sensibilidade do exame é de 90%, a especificidade é 90% e a prevalência da**
+**doença, em indivíduos de mesma idade e sexo, é 5%.**
+
+```{r}
+prevalencia <- 0.05
+odds_pre <- 0.05 /
+  (1 - 0.05)
+sensibilidade <- 0.90
+especificidade <- 0.90
+
+razao_verossimilhanca_teste_positivo <- (sensibilidade) /
+  (1 - especificidade)
+odds_pos_teste_positivo <- odds_pre *
+  razao_verossimilhanca_teste_positivo
+
+prob_pos_teste_positivo <- (odds_pos_teste_positivo) /
+  (1 + (odds_pos_teste_positivo))
+VPP <- prob_pos_teste_positivo
+
+respostas[22, 1] <- base::round(prob_pos_teste_positivo,
+                                digits = 3)
+base::cat(base::noquote(respostas[22, 1]),
+          sep = "")
+```
+
+**7.Um paciente procura o consultório médico com resultado de exame**
+**negativo, querendo saber a probabilidade dele ter a doença. A**
+**sensibilidade do exame é de 90%, a especficidade é 90% e a prevalência da**
+**doença, em indivíduos de mesma idade e sexo, é 5%.**
+
+```{r}
+prevalencia <- 0.05
+odds_pre <- 0.05 /
+  (1 - 0.05)
+sensibilidade <- 0.90
+especificidade <- 0.90
+
+razao_verossimilhanca_teste_negativo <- (1 - sensibilidade) /
+  (especificidade)
+odds_pos_teste_negativo <- odds_pre *
+  razao_verossimilhanca_teste_negativo
+
+prob_pos_teste_negativo <- (odds_pos_teste_negativo) /
+  (1 + (odds_pos_teste_negativo))
+VPN <- 1 - prob_pos_teste_negativo
+
+respostas[23, 1] <- base::round(prob_pos_teste_negativo,
+                                digits = 3)
+base::cat(base::noquote(respostas[23, 1]),
+          sep = "")
+```
+
+**8.Dada a seguinte amostra (n = 20),**
+
+```{r }
+n_total <- 100000
+exercicio_8 <- base::as.data.frame(x = base::matrix(ncol = 1,
+                                                    nrow = 20))
+
+exercicio_8[1, 1] <- 4
+exercicio_8[2, 1] <- 3
+exercicio_8[3, 1] <- 7
+exercicio_8[4, 1] <- 6
+exercicio_8[5, 1] <- 0
+exercicio_8[6, 1] <- 3
+exercicio_8[7, 1] <- 3
+exercicio_8[8, 1] <- 4
+exercicio_8[9, 1] <- 5
+exercicio_8[10, 1] <- 8
+exercicio_8[11, 1] <- 0
+exercicio_8[12, 1] <- 6
+exercicio_8[13, 1] <- 3
+exercicio_8[14, 1] <- 2
+exercicio_8[15, 1] <- 1
+exercicio_8[16, 1] <- 2
+exercicio_8[17, 1] <- 5
+exercicio_8[18, 1] <- 3
+exercicio_8[19, 1] <- 8
+exercicio_8[20, 1] <- 7
+
+knitr::kable(
+  x = exercicio_8,
+  format = "latex",
+  caption = "Amostra.",
+  col.names = "observações",
+  row.names = FALSE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**Calcule:**
+
+**(a) média**
+
+```{r}
+exercicio_8 <-
+  base::c(4, 3, 7, 6, 0, 3, 3, 4, 5, 8, 0, 6, 3, 2, 1, 2, 5, 3, 8, 7)
+respostas[24, 1] <- base::round((base::sum(exercicio_8) /
+                                   base::length(exercicio_8)),
+                                digits = 3)
+base::cat(base::noquote(respostas[24, 1]),
+          sep = "")
+
+#ou, utilizar a função pronta: mean(exercicio_8)
+```
+
+**(b) mediana**
+
+```{r}
+exercicio_8 <- base::sort(exercicio_8)
+#sabendo que length(exercicio_8) = 20
+respostas[25, 1] <-
+  base::round(((exercicio_8[10] + exercicio_8[11]) /
+                 2),
+              digits = 3)
+base::cat(base::noquote(respostas[25, 1]),
+          sep = "")
+
+#ou, utilizar a função pronta: median(exercicio_8)
+```
+
+**(c) moda(s)**
+
+```{r}
+getmode <- function(x) {
+  uniq_x <- base::unique(x)
+  uniq_x[base::which.max(base::tabulate(base::match(x, uniq_x)))]
+}
+x <- exercicio_8
+
+respostas[26, 1] <- base::round(getmode(x),
+                                digits = 3)
+base::cat(base::noquote(respostas[26, 1]),
+          sep = "")
+```
+
+**(d) variância**
+
+```{r}
+variancia <- (((exercicio_8[1] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[2] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[3] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[4] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[5] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[6] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[7] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[8] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[9] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[10] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[11] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[12] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[13] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[14] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[15] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[16] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[17] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[18] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[19] - base::mean(exercicio_8)) ^ 2) +
+                ((exercicio_8[20] - base::mean(exercicio_8)) ^ 2)
+) /
+  (base::length(exercicio_8) - 1)
+respostas[27, 1] <- base::round(variancia,
+                                digits = 3)
+base::cat(base::noquote(respostas[27, 1]),
+          sep = "")
+
+#ou, utilizar a função pronta: var(exercicio_8)
+```
+
+**(e) desvio padrão**
+
+```{r}
+respostas[28, 1] <- base::round(base::sqrt(variancia),
+                                digits = 3)
+base::cat(base::noquote(respostas[28, 1]),
+          sep = "")
+
+#ou, utilizar a função pronta: sd(exercicio_8)
+```
+
+**9.Determine um valor z tal que a probabilidade do valor de uma observação**
+**estar entre [-z; +z] é de 99%**   
+*Observação: No caso deste exercício, será considerada a distribuição normal*
+*padrão, que apresenta média igual 0 e desvio padrão igual a 1.*
+
+```{r}
+respostas[29, 1] <-
+  base::round(stats::qnorm(p = 0.99, mean = 0, sd = 1),
+              digits = 3)
+base::cat(base::noquote(respostas[29, 1]),
+          sep = "")
+#esta função converte valores de probabilidades (p; semelhantes a quantis de
+#distribuição) em valores de z de uma distribuição normal com determinada
+#média (mean) e determinado desvio padrão (sd)
+```
+
+**10.Os valores de pressão arterial sistólica de uma população têm**
+**distribuição normal N (120, 625). Encontre a probabilidade de observar**
+**níveis entre 140 e 160 mmHg.**  
+*Observação: No caso deste exercício, será considerada a distribuição normal*
+*padrão, que apresenta média igual 0 e desvio padrão igual a 1.*
+
+```{r}
+X1 <- 140
+X2 <- 160
+mu <- 120
+sigma <- base::sqrt(625)
+z1 <- (X1 - mu) / sigma
+p1 <- stats::pnorm(q = z1,
+                   mean = 0,
+                   sd = 1)
+z2 <- (X2 - mu) / sigma
+p2 <- stats::pnorm(q = z2,
+                   mean = 0,
+                   sd = 1)
+
+p <- (p2 - p1)
+respostas[30, 1] <- base::round(p,
+                                digits = 3)
+base::cat(base::noquote(respostas[30, 1]),
+          sep = "")
+```
+
+**11.Construa o IC 95% para a prevalência de hipertensão obtida a partir de**
+**uma amostra de 19600 indivíduos que verificou que 4900 deles tinham a**
+**doença.**  
+*Observação: No caso deste exercício, será considerada a distribuição normal*
+*padrão, que apresenta média igual 0 e desvio padrão igual a 1.*
+
+```{r}
+z <- stats::qnorm(p = 0.95,
+                  mean = 0,
+                  sd = 1)
+amostra_total <- 19600
+amostra_doentes <- 4900
+prevalencia <- (amostra_doentes /
+                  amostra_total)
+
+limite_inferior <-
+  base::round(prevalencia - z * (base::sqrt((
+    1 /
+      (4 * amostra_total)
+  ))),
+  digits = 3)
+limite_superior <-
+  base::round(prevalencia + z * (base::sqrt((
+    1 /
+      (4 * amostra_total)
+  ))),
+  digits = 3)
+
+respostas[31, 1] <- base::as.character("IC=[0.244;0.256]")
+base::cat(base::noquote(respostas[31, 1]),
+          sep = "")
+```
+
+**12.Construa o IC 99% para o índice de falsos-positivos de um determinado**
+**exame baseado no fato de que uma amostra de 40000 exames positivos havia**
+**800 indivíduos sem a doença.**  
+*Observação: No caso deste exercício, será considerada a distribuição normal*
+*padrão, que apresenta média igual 0 e desvio padrão igual a 1.*
+
+```{r}
+z <- stats::qnorm(p = 0.99,
+                  mean = 0,
+                  sd = 1)
+amostra_total_positivos <- 40000
+amostra_falsos_positivos <- 800
+prop_falsos_positivos <-
+  (amostra_falsos_positivos /
+     amostra_total_positivos)
+
+limite_inferior <-
+  base::round(prop_falsos_positivos - z * (base::sqrt((
+    1 /
+      (4 * amostra_total_positivos)
+  ))),
+  digits = 3)
+limite_superior <-
+  base::round(prop_falsos_positivos + z * (base::sqrt((
+    1 /
+      (4 * amostra_total_positivos)
+  ))),
+  digits = 3)
+
+respostas[32, 1] <- base::as.character("IC=[0.014;0.026]")
+base::cat(base::noquote(respostas[32, 1]),
+          sep = "")
+```
+
+**13.Construa o IC 95% para a média de glicemia de uma amostra de n = 100** 
+**que resultou em média 100 mg/dl e variância 100 (mg/dl)^2**
+
+```{r}
+t <- stats::qt(p = 0.95, df = (amostra_total - 1))
+amostra_total <- 100
+amostra_media <- 100
+S <- base::sqrt(100)
+
+limite_inferior <-
+  base::round(amostra_media - t * (S /
+                                     base::sqrt(amostra_total)),
+              digits = 3)
+limite_superior <-
+  base::round(amostra_media + t * (S /
+                                     base::sqrt(amostra_total)),
+              digits = 3)
+
+respostas[33, 1] <- base::as.character("IC=[98.355;101.645]")
+base::cat(base::noquote(respostas[33, 1]), sep = "")
+```
+
+**14.Construa o IC 99% para a média de valores de natremia (presença de** 
+**sódio no sangue) de uma amostra de n = 144 que resultou em média 140 mEq/L**
+**e variância 9 (mEq/L)^2**
+
+```{r}
+t <- stats::qt(p = 0.99,
+               df = (amostra_total - 1))
+amostra_total <- 144
+amostra_media <- 140
+S <- base::sqrt(9)
+
+limite_inferior <-
+  base::round(amostra_media - t * (S /
+                                     base::sqrt(amostra_total)),
+              digits = 3)
+limite_superior <-
+  base::round(amostra_media + t * (S /
+                                     base::sqrt(amostra_total)),
+              digits = 3)
+
+respostas[34, 1] <- base::as.character("IC=[139.409;140.591]")
+base::cat(base::noquote(respostas[34, 1]),
+          sep = "")
+```
+
+**15.Explique os seguintes conceitos:**
+
+**(a) Poder do estudo de 80%**
+
+```{r}
+respostas[35, 1] <-
+  base::as.character(
+    "Significa que, se a associação
+  de interesse existe na população, há 80% de probabilidade que
+  isso seja evidenciado no estudo."
+  )
+base::cat(base::noquote(respostas[35, 1]))
+```
+
+**(b) Nível de significância de 5%**
+
+```{r}
+respostas[36, 1] <-
+  base::as.character(
+    "O nível de significância é um
+  valor de probabilidade arbitrado no início do estudo, a ser
+  comparado com o valor de probabilidade encontrado no estudo
+  (p-valor), com o intuito de decidir se a hipótese nula será
+  ou não rejeitada. Quando o nível de significância é 5%, a
+  hipótese nula só será rejeitada caso o valor de probabilidade
+  encontrado no estudo tenha valor inferior a 5%."
+  )
+base::cat(base::noquote(respostas[36, 1]))
+```
+
+**(c) Erro beta é de 10%**
+
+```{r}
+respostas[37, 1] <-
+  base::as.character(
+    "Probabilidade de 10% da
+  hipótese nula ser aceita quando, na verdade, ela é falsa.
+  Esta probabilidade está associada ao poder do estudo (1 - poder)."
+  )
+base::cat(base::noquote(respostas[37, 1]))
+```
+
+**(d) Erro alpha é de 5%**
+
+```{r}
+respostas[38, 1] <-
+  base::as.character(
+    "Probabilidade de 5% da
+  hipótese nula ser rejeitada quando, na verdade, ela é
+  verdadeira. Esta probabilidade está associada ao nível de
+  significância do estudo."
+  )
+base::cat(base::noquote(respostas[38, 1]))
+```
+
+**(e) p-valor de 0.012**
+
+```{r}
+respostas[39, 1] <-
+  base::as.character(
+    "Caso a hipóteses nula
+  seja verdadeira na população, a probabilidade do resultado
+  encontrado na amostra do estudo ocorrer é de 1.2%. Ou seja,
+  a probabilidade do resultado observado na amostra ter ocorrido
+  devido ao acaso na seleção dessa amostra é de 1.2%."
+  )
+base::cat(base::noquote(respostas[39, 1]))
+```
+
+**16.Um pesquisador, querendo concluir se existe associação entre obesidade**
+**e transtorno do pânico (TP), observou os seguintes resultados em uma**
+**amostra de 300 indivíduos:**
+
+```{r , echo = FALSE}
+exercicio_16 <- base::as.data.frame(
+  x = base::matrix(ncol = 3,
+                   nrow = 3),
+  row.names = base::c("com TP",
+                      "sem TP",
+                      "total")
+)
+
+exercicio_16[1, 1] <- 20
+exercicio_16[1, 2] <- 15
+exercicio_16[1, 3] <- 35
+exercicio_16[2, 1] <- 130
+exercicio_16[2, 2] <- 135
+exercicio_16[2, 3] <- 265
+exercicio_16[3, 1] <- 150
+exercicio_16[3, 2] <- 150
+exercicio_16[3, 3] <- 300
+
+knitr::kable(
+  x = exercicio_16,
+  format = "latex",
+  caption = "Obesidade e transtorno do pânico (TP).",
+  col.names = base::c("obeso", "não obeso", "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**Considerando um nível de significância de 5%, é possivel dizer que há**
+**associação entre essas condições clínicas?**
+
+```{r, results = "hold"}
+alpha <- 0.05
+m <- 2
+n <- 2
+df <- (m - 1) * (n - 1)
+qui_quadrado_valor_critico <- stats::qchisq(p = 0.95,
+                                            df)
+
+observado <- base::data.frame()
+observado[1, 1] <- 20
+observado[1, 2] <- 15
+observado[1, 3] <- 35
+observado[2, 1] <- 130
+observado[2, 2] <- 135
+observado[2, 3] <- 265
+observado[3, 1] <- 150
+observado[3, 2] <- 150
+observado[3, 3] <- 300
+base::row.names(observado) <- base::c("com TP",
+                                      "sem TP",
+                                      "total")
+
+esperado <- base::data.frame()
+esperado[1, 1] <- (150 * 35) / 300
+esperado[1, 2] <- (150 * 35) / 300
+esperado[1, 3] <- 35
+esperado[2, 1] <- (150 * 265) / 300
+esperado[2, 2] <- (150 * 265) / 300
+esperado[2, 3] <- 265
+esperado[3, 1] <- 150
+esperado[3, 2] <- 150
+esperado[3, 3] <- 300
+base::row.names(esperado) <- base::c("com TP",
+                                     "sem TP",
+                                     "total")
+
+knitr::kable(
+  x = observado,
+  format = "latex",
+  caption = "Observado.",
+  col.names = base::c("obeso",
+                      "não obeso",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+
+knitr::kable(
+  x = esperado,
+  format = "latex",
+  caption = "Esperado.",
+  col.names = base::c("obeso",
+                      "não obeso",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+```{r}
+qui_quadrado <-
+  ((observado[1, 1] - esperado[1, 1]) ^ 2 /
+     esperado[1, 1]) +
+  ((observado[1, 2] - esperado[1, 2]) ^ 2 /
+     esperado[1, 2]) +
+  ((observado[2, 1] - esperado[2, 1]) ^ 2 /
+     esperado[2, 1]) +
+  ((observado[2, 2] - esperado[2, 2]) ^ 2 /
+     esperado[2, 2])
+respostas[40, 1] <-
+  base::ifelse(
+    qui_quadrado > qui_quadrado_valor_critico,
+    "Sim. É possível dizer que há associação entre as condições clínicas",
+    "Não. Não é possível dizer que há associação entre as condições clínicas."
+  )
+base::cat(base::noquote("Qui quadrado = 0.809; qui-quadrado valor crítico = 3.84."))
+base::cat(base::noquote(respostas[40, 1]),
+          sep = "")
+```
+
+**17.Duas medicações estão sendo testadas para tratamento de mieloma**
+**múltiplo em 250 pacientes voluntários. Os resultados estão expressos na**
+**tabela a seguir:**
+
+```{r , echo = FALSE}
+exercicio_17 <- base::as.data.frame(
+  x = base::matrix(ncol = 3,
+                   nrow = 3),
+  row.names = base::c("droga A",
+                      "droga B",
+                      "total")
+)
+
+exercicio_17[1, 1] <- 80
+exercicio_17[1, 2] <- 70
+exercicio_17[1, 3] <- 150
+exercicio_17[2, 1] <- 60
+exercicio_17[2, 2] <- 40
+exercicio_17[2, 3] <- 100
+exercicio_17[3, 1] <- 140
+exercicio_17[3, 2] <- 110
+exercicio_17[3, 3] <- 250
+
+knitr::kable(
+  x = exercicio_17,
+  format = "latex",
+  caption = "Medicações para tratamento de mieloma múltiplo.",
+  col.names = base::c("eficaz",
+                      "não eficaz",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**Considerando um nível de significância de 5%, é possivel dizer que uma**
+**medicação é superior à outra? Se sim, qual delas?**
+
+```{r , results = "hold"}
+alpha <- 0.05
+m <- 2
+n <- 2
+df <- (m - 1) * (n - 1)
+qui_quadrado_valor_critico <- stats::qchisq(p = 0.95,
+                                            df)
+
+observado <- base::data.frame()
+observado[1, 1] <- 80
+observado[1, 2] <- 70
+observado[1, 3] <- 150
+observado[2, 1] <- 60
+observado[2, 2] <- 40
+observado[2, 3] <- 100
+observado[3, 1] <- 140
+observado[3, 2] <- 110
+observado[3, 3] <- 250
+base::rownames(observado) <- base::c("droga A",
+                                     "droga B",
+                                     "total")
+
+esperado <- base::data.frame()
+esperado[1, 1] <- (150 * 140) / 250
+esperado[1, 2] <- (150 * 110) / 250
+esperado[1, 3] <- 150
+esperado[2, 1] <- (100 * 140) / 250
+esperado[2, 2] <- (100 * 110) / 250
+esperado[2, 3] <- 100
+esperado[3, 1] <- 140
+esperado[3, 2] <- 110
+esperado[3, 3] <- 250
+base::rownames(esperado) <- base::c("droga A",
+                                    "droga B",
+                                    "total")
+
+knitr::kable(
+  x = observado,
+  format = "latex",
+  caption = "Observado.",
+  col.names = base::c("eficaz",
+                      "não eficaz",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+
+knitr::kable(
+  x = esperado,
+  format = "latex",
+  caption = "Esperado.",
+  col.names = base::c("eficaz",
+                      "não eficaz",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+```{r}
+qui_quadrado <-
+  ((observado[1, 1] - esperado[1, 1]) ^ 2 /
+     esperado[1, 1]) +
+  ((observado[1, 2] - esperado[1, 2]) ^ 2 /
+     esperado[1, 2]) +
+  ((observado[2, 1] - esperado[2, 1]) ^ 2 /
+     esperado[2, 1]) +
+  ((observado[2, 2] - esperado[2, 2]) ^ 2 /
+     esperado[2, 2])
+respostas[41, 1] <-
+  base::ifelse(
+    qui_quadrado > qui_quadrado_valor_critico,
+    "Sim. É possível dizer que uma medicação é superior a outra",
+    "Não. Não é possível dizer que uma medicação é superior à outra."
+  )
+base::cat(base::noquote("Qui quadrado = 1.08; qui-quadrado valor crítico = 3.84."))
+base::cat(base::noquote(respostas[41, 1]),
+          sep = "")
+```
+
+**18.Considere um estudo hipotético de caso-controle (50 casos e 50**
+**controles) para estudar a associação entre abuso/dependência de bebida**
+**alcoólica (variável dicotômica, sim/não) e infarto do miocárdio (variável**
+**dicotômica, sim/não). Há no banco de dados variáveis sociodemográficas**
+**(sexo, idade, escolaridade, raça) história de fatores de risco**
+**cardiovasculares prévios (hipertensão, tabagismo, sedentarismo, diabetes,**
+**dislipidemia) e dados laboratoriais (colesterol total, LDL-colesterol,**
+**HDL-colesterol, triglicérides, glicemia de jejum).**
+
+**(a) Cite um teste estatístico que permite avaliar a associação de**
+**interesse (abuso/dependência de bebida alcoólica e infarto do miocárdio)**
+**sem ajuste para outras variáveis**
+
+```{r}
+respostas[42, 1] <- base::as.character("Teste qui-quadrado.")
+base::cat(base::noquote(respostas[42, 1]))
+```
+
+**(b) Cite um teste estatístico que permite avaliar a associação de**
+**interesse (abuso/dependência de bebida alcoólica e infarto do miocárdio)**
+**com ajuste para outras variáveis**
+
+```{r}
+respostas[43, 1] <- base::as.character("Regressão logística.")
+base::cat(base::noquote(respostas[43, 1]))
+```
+
+**(c) Cite um exemplo de associação entre duas variáveis do banco de dados**
+**que possa ser avaliada utilizando-se o teste t**
+
+```{r}
+respostas[44, 1] <-
+  base::as.character("Associação entre raça e glicemia de jejum.")
+base::cat(base::noquote(respostas[44, 1]))
+```
+
+**(d) Cite um exemplo de associação entre duas variáveis do banco de dados**
+**que possa ser avaliada utilizando-se regressão linear simples**
+
+```{r}
+respostas[45, 1] <-
+  base::as.character("Associação entre colesterol total e glicemia de jejum.")
+base::cat(base::noquote(respostas[45, 1]))
+```
+
+**19.Em um estudo de coorte de 3000 fumantes e 5000 não fumantes foram**
+**detectados os resultados apresentados na tabela abaixo:**
+
+```{r , echo = FALSE}
+exercicio_19 <- base::as.data.frame(
+  x = base::matrix(ncol = 3,
+                   nrow = 3),
+  row.names = base::c("fumantes",
+                      "não fumantes",
+                      "total")
+)
+
+exercicio_19[1, 1] <- 84
+exercicio_19[1, 2] <- 2916
+exercicio_19[1, 3] <- 3000
+exercicio_19[2, 1] <- 87
+exercicio_19[2, 2] <- 4913
+exercicio_19[2, 3] <- 5000
+exercicio_19[3, 1] <- 171
+exercicio_19[3, 2] <- 7829
+exercicio_19[3, 3] <- 8000
+
+knitr::kable(
+  x = exercicio_19,
+  format = "latex",
+  caption = "Doença arterial coronariana (DAC) e tabagismo.",
+  col.names = base::c("DAC presente",
+                      "DAC ausente",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**(a) Qual a incidência de doença coronariana entre fumantes e não fumantes?**
+
+```{r}
+incidencia_geral <- 171 / 8000
+incidencia_fumantes <- 84 / 3000
+incidencia_nao_fumantes <- 87 / 5000
+respostas[46, 1] <-
+  base::as.character(
+    "Incidência geral = 0.0214;
+    incidência em fumantes = 0.028;
+    incidência em não fumantes = 0.0174."
+  )
+base::cat(base::noquote(respostas[46, 1]))
+```
+
+**(b) Quais as medidas de associação mais apropriadas para este tipo de**
+**estudo?**
+
+```{r}
+respostas[47, 1] <-
+  base::as.character("Risco relativo (RR),
+                     odds ratio (OR) e
+                     risco atribuível (RA).")
+base::cat(base::noquote(respostas[47, 1]))
+```
+
+**(c) Calcule as medidas de associação que você citou na questão anterior e**
+**as interprete.**
+
+```{r}
+risco_relativo <- (incidencia_fumantes) / (incidencia_nao_fumantes)
+
+odds_fumantes <- ((84 / 3000) /
+                    (2916 / 3000))
+odds_nao_fumantes <- ((87 / 5000) /
+                        (4913 / 5000))
+odds_ratio <- odds_fumantes / odds_nao_fumantes
+
+risco_atribuivel <- incidencia_fumantes - incidencia_nao_fumantes
+
+respostas[48, 1] <-
+  base::as.character("Risco relativo (RR) = 1.61;
+               odds ratio (OR) = 1.63;
+               risco atribuível (RA) = 0.0106.")
+base::cat(base::noquote(respostas[48, 1]))
+```
+
+**20.Um estudo de associação entre câncer de pulmão e tabagismo, com 200**
+**casos e 400 controles mostrou os resultados mostrados na tabela abaixo:**
+
+```{r}
+exercicio_20 <- base::as.data.frame(
+  x = base::matrix(ncol = 3, nrow = 3),
+  row.names = base::c("fumantes",
+                      "não fumantes",
+                      "total")
+)
+
+exercicio_20[1, 1] <- 112
+exercicio_20[1, 2] <- 176
+exercicio_20[1, 3] <- 288
+exercicio_20[2, 1] <- 88
+exercicio_20[2, 2] <- 224
+exercicio_20[2, 3] <- 312
+exercicio_20[3, 1] <- 200
+exercicio_20[3, 2] <- 400
+exercicio_20[3, 3] <- 600
+
+knitr::kable(
+  x = exercicio_20,
+  format = "latex",
+  caption = "Câncer de pulmão e tabagismo.",
+  col.names = base::c("casos",
+                      "controle",
+                      "total"),
+  row.names = TRUE,
+  digits = 3,
+  align = "c"
+) %>%
+  kableExtra::kable_styling(kable_input = .,
+                            position = "center",
+                            latex_options = "hold_position")
+```
+
+**(a) Por que você não pode calcular o risco relativo em estudos de caso**
+**controle?**
+
+```{r}
+respostas[49, 1] <-
+  base::as.character(
+    "Em estudos de caso controle,
+  não é possível calcular a incidência da doença, pois começamos
+  o estudo com pessoas doentes e não doentes. Uma vez que o risco
+  relativo é uma medida de associação definida pela razão das
+  incidências de determinado evento em diferentes grupos, não é
+  possível calcular o risco relativo em estudos de caso controle."
+  )
+base::cat(base::noquote(respostas[49, 1]))
+```
+
+**(b) Este tipo de estudo é o ideal para testar a associação entre tabagismo**
+**e câncer pulmão?**  
+**Justifique.**
+
+```{r}
+respostas[50, 1] <-
+  base::as.character(
+    "Sim. Em câncer o período de
+  latência (período de tempo compreendido entre a data da primeira
+  exposição e a data do diagnóstico) é bastante longo. O período de
+  latência entre o início da exposição à fumaça de tabaco e a ocorrência
+  do câncer de pulmão é de cerca de três décadas (WEISS, 1997 apud
+  WUNSCH FILHO et al, 2010). Dessa forma, realizar um estudo de coorte
+  seria extremamente custoso e demorado; enquanto que, realizar um
+  estudo de caso controle, reduz o investimento financeiro e o tempo
+  necessário para que se possa tirar conclusões sobre a existência de
+  associação entre tabagismo e câncer de pulmão. Além disso, de forma
+  geral (no Brasil e no mundo), a exposição ao tabaco não é uma exposição
+  rara a ponto de tornar um estudo de caso-controle ineficiente. Portanto,
+  apesar de em um estudo de caso controle não ser possível calcular a
+  medida de associação que permite investigar se o grupo de fumantes
+  apresenta ou não maior risco de desenvolver cancêr de pulmão, em
+  comparação ao grupo de não fumantes (risco relativo), mas o cálculo
+  de odds ratio é um medida que pode ser utilizada nesse tipo de estudo
+  para investigar a existência de associação entre a exposição (tabagismo)
+  e o desfecho (câncer de pulmão)."
+  )
+base::cat(base::noquote(respostas[50, 1]))
+```
+
+**(c) Calcule o odds ratio (razão de chances) para câncer de pulmão em**
+**relação ao hábito de fumar.**
+
+```{r}
+odds_fumantes <- ((112 / 288) /
+                    (176 / 288))
+odds_nao_fumantes <- ((88 / 312) /
+                        (224 / 312))
+odds_ratio <- base::round(odds_fumantes /
+                            odds_nao_fumantes,
+                          digits = 3)
+respostas[51, 1] <- odds_ratio
+base::cat(base::noquote(respostas[51, 1]))
+```
+
+```{r}
+utils::write.csv(respostas, file =
+                   "MCM5880_respostas_exercicios_avaliacao_FernandaFortti.csv")
+```
+

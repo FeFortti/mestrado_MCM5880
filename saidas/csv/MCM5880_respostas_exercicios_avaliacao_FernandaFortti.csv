@@ -1,0 +1,100 @@
+"","resposta"
+"1a","31000"
+"1b","10000"
+"1c","6000"
+"1d","59000"
+"1e","0.16"
+"1f","0.333"
+"1g","0.027"
+"2a","0.15"
+"2b","0.35"
+"2c","0.143"
+"2d","0.333"
+"2e","0.154"
+"2f","0.846"
+"3","0.191"
+"4a","0.8"
+"4b","0.9"
+"4c","0.774"
+"4d","0.913"
+"4e","8"
+"4f","0.222"
+"5","Probabilidade pós teste 1 = 0.091;
+  probabilidade pós teste 2 = 0.800;
+  probabilidade pós teste 3 = 0.333."
+"6","0.321"
+"7","0.006"
+"8a","4"
+"8b","3.5"
+"8c","3"
+"8d","6"
+"8e","2.449"
+"9","2.326"
+"10","0.157"
+"11","IC=[0.244;0.256]"
+"12","IC=[0.014;0.026]"
+"13","IC=[98.355;101.645]"
+"14","IC=[139.409;140.591]"
+"15a","Significa que, se a associação
+  de interesse existe na população, há 80% de probabilidade que
+  isso seja evidenciado no estudo."
+"15b","O nível de significância é um
+  valor de probabilidade arbitrado no início do estudo, a ser
+  comparado com o valor de probabilidade encontrado no estudo
+  (p-valor), com o intuito de decidir se a hipótese nula será
+  ou não rejeitada. Quando o nível de significância é 5%, a
+  hipótese nula só será rejeitada caso o valor de probabilidade
+  encontrado no estudo tenha valor inferior a 5%."
+"15c","Probabilidade de 10% da
+  hipótese nula ser aceita quando, na verdade, ela é falsa.
+  Esta probabilidade está associada ao poder do estudo (1 - poder)."
+"15d","Probabilidade de 5% da
+  hipótese nula ser rejeitada quando, na verdade, ela é
+  verdadeira. Esta probabilidade está associada ao nível de
+  significância do estudo."
+"15e","Caso a hipóteses nula
+  seja verdadeira na população, a probabilidade do resultado
+  encontrado na amostra do estudo ocorrer é de 1.2%. Ou seja,
+  a probabilidade do resultado observado na amostra ter ocorrido
+  devido ao acaso na seleção dessa amostra é de 1.2%."
+"16","Não. Não é possível dizer que há associação entre as condições clínicas."
+"17","Não. Não é possível dizer que uma medicação é superior à outra."
+"18a","Teste qui-quadrado."
+"18b","Regressão logística."
+"18c","Associação entre raça e glicemia de jejum."
+"18d","Associação entre colesterol total e glicemia de jejum."
+"19a","Incidência geral = 0.0214;
+    incidência em fumantes = 0.028;
+    incidência em não fumantes = 0.0174."
+"19b","Risco relativo (RR),
+                     odds ratio (OR) e
+                     risco atribuível (RA)."
+"19c","Risco relativo (RR) = 1.61;
+               odds ratio (OR) = 1.63;
+               risco atribuível (RA) = 0.0106."
+"20a","Em estudos de caso controle,
+  não é possível calcular a incidência da doença, pois começamos
+  o estudo com pessoas doentes e não doentes. Uma vez que o risco
+  relativo é uma medida de associação definida pela razão das
+  incidências de determinado evento em diferentes grupos, não é
+  possível calcular o risco relativo em estudos de caso controle."
+"20b","Sim. Em câncer o período de
+  latência (período de tempo compreendido entre a data da primeira
+  exposição e a data do diagnóstico) é bastante longo. O período de
+  latência entre o início da exposição à fumaça de tabaco e a ocorrência
+  do câncer de pulmão é de cerca de três décadas (WEISS, 1997 apud
+  WUNSCH FILHO et al, 2010). Dessa forma, realizar um estudo de coorte
+  seria extremamente custoso e demorado; enquanto que, realizar um
+  estudo de caso controle, reduz o investimento financeiro e o tempo
+  necessário para que se possa tirar conclusões sobre a existência de
+  associação entre tabagismo e câncer de pulmão. Além disso, de forma
+  geral (no Brasil e no mundo), a exposição ao tabaco não é uma exposição
+  rara a ponto de tornar um estudo de caso-controle ineficiente. Portanto,
+  apesar de em um estudo de caso controle não ser possível calcular a
+  medida de associação que permite investigar se o grupo de fumantes
+  apresenta ou não maior risco de desenvolver cancêr de pulmão, em
+  comparação ao grupo de não fumantes (risco relativo), mas o cálculo
+  de odds ratio é um medida que pode ser utilizada nesse tipo de estudo
+  para investigar a existência de associação entre a exposição (tabagismo)
+  e o desfecho (câncer de pulmão)."
+"20c","1.62"
